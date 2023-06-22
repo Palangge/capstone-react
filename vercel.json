@@ -2,6 +2,9 @@
     "version": 2,
     "builds": [
       {
+        "use": "@now/npm run build"
+      },
+      {
         "src": "server.js",
         "use": "@now/node"
       }
