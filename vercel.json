@@ -1,19 +1,11 @@
 {
     "version": 2,
     "builds": [
-        {
-          "src": "run build",
-          "use": "@now/npm"
-        },
-      {
-        "src": "server.js",
-        "use": "@now/node"
-      }
+      { "src": "package.json", "use": "@vercel/node" },
+      { "src": "server.js", "use": "@vercel/node" },
+      { "src": "public/**/*", "use": "@vercel/static-build" }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "server.js"
-      }
+      { "src": "/(.*)", "dest": "server.js" }
     ]
   }
