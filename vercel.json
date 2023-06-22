@@ -1,6 +1,10 @@
 {
     "version": 2,
     "builds": [
+        {
+          "src": "run build",
+          "use": "@now/npm"
+        },
       {
         "src": "server.js",
         "use": "@now/node"
