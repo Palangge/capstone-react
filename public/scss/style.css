@@ -1,0 +1,305 @@
+/* 
+    Provides a semantic media query from the following:
+    Respond above XX(screen sizes)
+    Respond below XX
+    Respond between XX and XX
+
+    Whereas:
+    XX is the two letter bootstrap breakpoint (i.e sm, md)
+
+    SYNTAX for media query
+    @media (min-width: 768px) and (max-width: 991px) 
+    {
+        Target devices between 768px and 992px
+    }
+
+    It's best practice to use Bootstrap breakpoints in your own code but it's painful to write them all the time.  
+*/
+:root {
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  max-width: 100vw;
+  grid-template-rows: auto 1fr auto; /* key rule */
+  grid-template-columns: 1fr;
+  grid-template-areas: "header header" "section" "footer footer";
+}
+body > * :not(header) :not(footer) :not(script) :not(link) :not(.leftSidebar) :not(.rightSidebar) :not(.card-body) :not(.banner1) :not(.accordion1) {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  background: rgb(138, 72, 25);
+  color: #fff;
+  padding: 8px 30px;
+  margin: 30px 0;
+  border-radius: 30px;
+  transition: background 0.5s;
+}
+.btn :hover {
+  background: #563434;
+  color: white;
+}
+
+iframe {
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: 100%;
+}
+
+.grid_column_center {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+bg-transparent {
+  background-color: transparent !important;
+}
+
+.card_title {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.container {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
+  --bs-bg-opacity: 0.5;
+  background-color: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.center_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slol {
+  background-repeat: no-repeat;
+  background-color: white;
+  background-image: url("../images/wallpapers/Gray_White.svg");
+  background-size: cover;
+  font-size: 1.25rem;
+}
+
+.leftSidebar {
+  display: flex;
+  margin-right: auto;
+  margin-left: 0;
+  padding: 5px;
+}
+
+.mid-content {
+  display: flex;
+  padding: 5px;
+}
+
+.rightSidebar {
+  display: flex;
+  margin-left: auto;
+  margin-right: 0;
+  padding: 5px;
+  color: white;
+}
+
+.sidebar-wrapper {
+  width: 40%;
+  float: left !important;
+}
+
+.content {
+  display: flex;
+  justify-content: start;
+  padding: 0 20px;
+}
+
+.content-wrapper {
+  width: 60% !important;
+  float: left;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-color: rgba(108, 117, 125, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px;
+}
+
+.list-group a, .pagination a {
+  color: rgb(108, 117, 125);
+  text-decoration: none !important;
+}
+
+.pagination .active {
+  background-color: rgb(108, 117, 125);
+  color: white;
+  border-color: rgb(108, 117, 125);
+}
+
+.end-content a {
+  background-color: rgb(108, 117, 125);
+  color: white;
+  border-color: rgb(108, 117, 125);
+}
+
+/* make it red instead (with with same width and style) */
+*:active, *:hover {
+  outline-color: rgb(108, 117, 125);
+}
+
+.nav-link {
+  padding-left: 5%;
+}
+
+.nav-link-f {
+  padding-left: 0;
+}
+
+.contact-link {
+  color: black;
+  text-decoration: none;
+}
+
+.contact-link:hover {
+  color: rgb(108, 117, 125);
+  opacity: 1;
+}
+
+/* Style all font awesome icons */
+.fa {
+  padding: 6px;
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Point Left */
+.fa-hand-back-point-right {
+  background: rgb(36, 36, 36);
+  border-radius: 50%;
+  color: white;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+  color: black;
+  opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+/* Facebook */
+.fa-facebook {
+  background: rgb(108, 117, 125);
+  border-radius: 50%;
+  color: white;
+}
+
+/* Twitter */
+.fa-twitter {
+  background: rgb(108, 117, 125);
+  border-radius: 50%;
+  color: white;
+}
+
+/* Instagram */
+.fa-instagram {
+  background: rgb(108, 117, 125);
+  border-radius: 50%;
+  color: white;
+}
+
+/* Github */
+.fa-github {
+  background: rgb(108, 117, 125);
+  border-radius: 50%;
+  color: white;
+}
+
+/* LinkedIn */
+.fa-linkedin {
+  background: rgb(108, 117, 125);
+  border-radius: 50%;
+  color: white;
+}
+
+/* Fixes dropdown menus placed on the right side */
+.me-auto .dropdown-menu {
+  left: auto !important;
+  right: 0px;
+}
+
+.class-with-background1 {
+  background-image: url("../images/wallpapers/Gray_White.svg");
+  background-size: contain;
+}
+
+.class-with-background2 {
+  background-image: url("../images/wallpapers/Gradient_White-Gray.svg");
+  background-size: contain;
+  background-color: gray;
+}
+
+@media (min-width: 576px) {
+  .card {
+    display: block;
+  }
+}
+@media (max-width: true-1) {
+  .card {
+    display: block;
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+/*
+    Respond Between
+    - it checks both lower and upper keys exists in the breakpoints before  writing this in the media query
+    - we will check that both $lower and $upper keys exists in the $breakpoints map before writing it in the media query
+*/
+@media (min-width: 576px) and (max-width: 1399px) {
+  .card img {
+    display: block;
+    height: 100%;
+  }
+}
+foot-top .navbar-nav {
+  width: 100%;
+}
+@media (min-width: 0) and (max-width: 767px) {
+  foot-top .navbar-nav {
+    margin: 0 !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .img-fluid {
+    max-width: 90% !important;
+    height: auto;
+  }
+}/*# sourceMappingURL=style.css.map */
