@@ -86,3 +86,6 @@ app.use((req, res, next) => {
 app.listen(port, () => {
   console.log('Server is running on port '+port);
 });
+
+// Export the Express API
+module.exports = app;
