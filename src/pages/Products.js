@@ -91,7 +91,7 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
               <li key={item._id} class="row p-0 pb-3">
                 <span class="col">{item.name} x{' '}</span>
                 <div class="input-group ms-1 me-1 col">
-                  <button class="btn btn-outline-danger" type="button" onClick={(e) => {handleQuantityChange(item, parseInt(e.target.value)-1)}}> - </button>
+                  <button class="btn btn-outline-danger" type="button" onClick={(e) => {handleQuantityChange(item, item.quantity-1)}}> - </button>
                   <input
                   className='form-control'
                   type="number"
@@ -99,7 +99,7 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
                   value={item.quantity}
                   onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
                   />
-                  <button class="btn btn-outline-primary" type="button" onClick={(e) => {handleQuantityChange(item, parseInt(e.target.value)+1)}}> + </button>
+                  <button class="btn btn-outline-primary" type="button" onClick={(e) => {handleQuantityChange(item, item.quantity+1)}}> + </button>
                 </div>
                 <span class="col">{' '}
                 - ₱{item.quantity * item.price}
