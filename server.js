@@ -11,7 +11,7 @@ const session = require('express-session');
 const { v4: uuidv4 } = require('uuid');
 
 // Connect to MongoDB
-connectToMongoDB();
+//connectToMongoDB();
 
 const app = express();
 const port = process.env.PORT || 3000; // Use the provided port or fallback to 3000
