@@ -41,6 +41,9 @@ const ContactMessageList = ({ messages,fetchContactMessages }) => {
 export const Contact = () => {
   const [messages, setMessages] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [sState, setSState] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [err, setErr] = useState('');
   const [contactMessage, setContactMessage] = useState(null);
   const { id } = useParams();
 
@@ -97,6 +100,7 @@ export const Contact = () => {
 
   const sendMessage = async () => {
     try {
+      setSState(true);
       const firstName = document.getElementById('fName').value;
       const lastName = document.getElementById('lName').value;
       const email = document.getElementById('emailAdd').value;
@@ -112,21 +116,43 @@ export const Contact = () => {
       };
       const response = await axios.post('/api/contact', payload);
       console.log(response.data);
-      console.log('Message sent successfully!');
+      setMsg('Message sent successfully!');
+      setTimeout(() => {
+        window.location.replace(window.location.origin);
+      }, 300);
     } catch (error) {
       console.error('Error sending message:', error);
+      setErr('Error sending message: '+error);
     }
+    setSState(false);
   };
 
   const handleDelete = async () => {
     try {
       const response = await axios.delete(`/api/contact/${id}`);
-      console.log('Message deleted successfully!');
+      setMsg('Message deleted successfully!');
       alert(response.data);
       window.location.replace(window.location.origin+"/Contact");
     } catch (error) {
       console.error('Error deleting contact message:', error);
+      setErr('Error deleting contact message: '+error);
     }
+  };
+  const MessageModal = () => {
+    return (
+        <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+            {msg}
+            <button type="button" class="btn-close" onclick={setMsg('')} data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    );
+  };
+  const ErrorModal = () => {
+    return (
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {err}
+            <button type="button" class="btn-close" onclick={setErr('')} data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    );
   };
 
   if (isAdmin && id && contactMessage) {
@@ -194,8 +220,9 @@ export const Contact = () => {
                 </label>
                 <textarea class="form-control" id="message" rows="3"></textarea>
               </div>
-
-              <button type="button" class="btn btn-primary" onClick={sendMessage}>
+              {err && <ErrorModal />}
+              {msg && <MessageModal />}
+              <button type="button" class="btn btn-primary" disabled={sState} onClick={sendMessage}>
                 Submit
               </button>
               <button type="reset" class="btn btn-secondary">

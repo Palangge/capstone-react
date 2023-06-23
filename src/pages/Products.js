@@ -21,6 +21,8 @@ const generateProducts = () => {
 
 const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList , setCartItems }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [msg,setMsg] = useState('');
+  const [err,setErr] = useState('');
 
   if(cartItems==null)cartItems = [];
   const totalPrice = cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
@@ -38,17 +40,16 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
       });
       str+="\nsales invoice: "+receipt.sales_invoice.insertedId;
       str+="\nemail: "+receipt.email;
-      alert(str);
+      setMsg(str);
     } catch (error) {
       console.error('Error checkout:', error);
-      alert('Error checkout: '+error);
+      setErr('Error checkout: '+error);
     } finally{
       refreshProductList();
       console.log("product refresh");
       setIsProcessing(false);
     }
   };
-
   const handleQuantityChange = (item, quantity) => {
     if (quantity < 1) {
       removeFromCart(item);
@@ -60,6 +61,23 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
       setCartItems(updatedCartItems);
     }
   };
+  const CheckOutMessage = () => {
+    return (
+        <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+            {msg}
+            <button type="button" class="btn-close" onclick={setMsg('')} data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    );
+  };
+
+  const ErrorMessage = () => {
+    return (
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {err}
+            <button type="button" class="btn-close" onclick={setErr('')} data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    );
+  };
 
   return (
     <div>
@@ -70,25 +88,35 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
         <div>
           <ul>
             {cartItems.map((item) => (
-              <li key={item._id}>
-                {item.name} x{' '}
-                <input
+              <li key={item._id} class="row p-0 pb-3">
+                <span class="col">{item.name} x{' '}</span>
+                <div class="input-group ms-1 me-1 col">
+                  <button class="btn btn-outline-danger" type="button" onClick={(e) => {handleQuantityChange(item, parseInt(e.target.value)-1)}}> - </button>
+                  <input
+                  className='form-control'
                   type="number"
                   min="1"
                   value={item.quantity}
                   onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
-                />{' '}
+                  />
+                  <button class="btn btn-outline-primary" type="button" onClick={(e) => {handleQuantityChange(item, parseInt(e.target.value)+1)}}> + </button>
+                </div>
+                <span class="col">{' '}
                 - ₱{item.quantity * item.price}
-                <button onClick={() => removeFromCart(item)}>Remove from Cart</button>
+                {' '}
+                <button class="btn btn-outline-danger" onClick={() => removeFromCart(item)}>Remove from Cart</button>
+                </span>
               </li>
             ))}
           </ul>
           <p>Total: ${totalPrice}</p>
-          <button onClick={async () => {await checkOut()}} disabled={isProcessing}>
+          <button className="btn btn-outline-primary" onClick={async () => {await checkOut()}} disabled={isProcessing}>
             Checkout
           </button>
         </div>
       )}
+      {msg.length>0 && <CheckOutMessage />}
+      {err.length>0 && <ErrorMessage />}
     </div>
   );
 };
