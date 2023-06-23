@@ -1,20 +1,37 @@
-// index.js
-const express = require('express')
+const express = require('express');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/user.js');
+const productRoutes = require('./routes/product.js');
+const cartRoutes = require('./routes/cart.js');
+const contactRoutes = require('./routes/contact.js');
+const session = require('express-session');
+const { v4: uuidv4 } = require('uuid');
 
-const app = express()
-const PORT = 4000
+const app = express();
+const port = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `)
-})
+app.use(
+  session({
+    genid: () => uuidv4(),
+    secret: uuidv4(),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 600000 // 10 mins of inactivity.
+    }
+  })
+);
 
-app.get('/', (req, res) => {
-  res.send('Hey this is my API running 🥳')
-})
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get('/about', (req, res) => {
-  res.send('This is my about route..... ')
-})
+app.use('/api/users', userRoutes.userRouter);
+app.use('/api/products', productRoutes.productRouter);
+app.use('/api/cart', cartRoutes.cartRouter);
+app.use('/api/contact', contactRoutes.contactRouter);
 
-// Export the Express API
-module.exports = app
+app.use((req, res, next) => {
+  res.status(404).send('Not Found');
+});
+
+module.exports = app;
