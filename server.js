@@ -50,7 +50,7 @@ app.use(bodyParser.json());
 
 // Serve the React build files
 //app.use(express.static(path.join(__dirname, "build")));
-app.use(express.static("public"));
+//app.use(express.static("public"));
 
 // Route for index //not needed since react will handle all routes for browser user/client/customer/admin any frontend user
 //app.get('/', getIndexPage);
@@ -73,7 +73,9 @@ app.use('/api/contact', contactRoutes.contactRouter);//put api here to avoid col
 /*app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });*/
-
+app.use((req, res, next) => {
+  res.send("hello");
+});
 
 // Error 404 - Page not found | this will probably not be reached but leave it here anyway
 //app.use(handleNotFound);
