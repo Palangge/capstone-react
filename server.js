@@ -81,9 +81,9 @@ app.use((req, res, next) => {
 //app.use(handleNotFound);
 
 // Start the server
-app.listen(port, () => {
+/*app.listen(port, () => {
   console.log('Server is running on port '+port);
-});
+});*/
 
 // Connect to MongoDB
 //connectToMongoDB();
