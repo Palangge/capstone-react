@@ -11,10 +11,10 @@ function getCartCollection() {
 }
 
 // Get cart items for a specific user
-async function getCartItems(email) {
+async function getCartItems(_id) {
   try {
     const collection = getCartCollection();
-    const cartItems = await collection.findOne({ email: email });
+    const cartItems = await collection.findOne({ user_id: new ObjectId(_id) });
     if(cartItems)
       return cartItems.cart;
     else
@@ -26,17 +26,17 @@ async function getCartItems(email) {
 }
 
 // Add an item to the cart for a specific user
-async function dumpToCart(email, cart) {
+async function dumpToCart(_id, cart) {
   try {
     const collection = getCartCollection();
-    const cartItems = await collection.findOne({ email: email });//.find({ email }).toArray();
+    const cartItems = await collection.findOne({ user_id: new ObjectId(_id) });//.find({ email }).toArray();
     if(cartItems){
         const cartItem = {$set: {cart: cart,},};
         //console.log(cartItem);
-        const result = await collection.updateOne({ email: email},cartItem);
+        const result = await collection.updateOne({ _id: new ObjectId(_id)},cartItem);
         return result;
     }else{
-        const cartItem = { email: email, cart: cart };
+        const cartItem = { _id: new ObjectId(_id), cart: cart };
         //console.log(cartItem);
         const result = await collection.insertOne(cartItem);
         return result.insertedId;
@@ -48,11 +48,11 @@ async function dumpToCart(email, cart) {
 }
 
 // Checkout for a specific user
-async function checkOutCart(email) {
+async function checkOutCart(user_id) {
   let cartItems;
   try {
     const collection = getCartCollection();
-    cartItems = await collection.findOne({ email: email });
+    cartItems = await collection.findOne({ user_id: new ObjectId(user_id) });
   } catch (error) {
     console.error(error);
     throw new Error('Failed to check out:'+error);
@@ -105,7 +105,8 @@ async function checkOutCart(email) {
       return db.collection('checkout');
     }
     class Receipt{
-      constructor(email,orderFinal,total){
+      constructor(_id,email,orderFinal,total){
+        this.user_id = new ObjectId(_id);
         this.email = email;
         this.products = orderFinal;
         this.total = Number(total);
@@ -117,7 +118,7 @@ async function checkOutCart(email) {
       await editProduct(order._id, product);
     });
     
-    const receipt = new Receipt(email, orderFinal, total);
+    const receipt = new Receipt(_id, orderFinal, total);
     try {
       const checkoutCollection = getCheckoutCollection();
       const insertId = await checkoutCollection.insertOne(receipt);

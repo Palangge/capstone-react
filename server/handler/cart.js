@@ -7,11 +7,12 @@ const { getCartItems, dumpToCart, checkOutCart } = require('../model/cart');
 async function getCart(req, res) {
   try {
     const email = req.session.email;
+    const id = req.session._id;
     if (!email) {
       res.status(400).send('Please login to use this feature');
       return;
     }
-    const cartItems = await getCartItems(email);
+    const cartItems = await getCartItems(id);
     console.log(cartItems);
     res.json(cartItems);
   } catch (error) {
@@ -24,14 +25,14 @@ async function getCart(req, res) {
 async function updateCart(req, res) {
   const { items } = req.body;
   try {
-    const email = req.session.email;
-    if (!email) {
+    const id = req.session._id;
+    if (!id) {
       res.status(400).send('Please login to use this feature');
       return;
     }
     console.log(items);
-    console.log(email);
-    const insertedId = await dumpToCart(email, items);
+    console.log(id);
+    const insertedId = await dumpToCart(id, items);
     res.json({ insertedId });
   } catch (error) {
     console.error(error);
@@ -42,9 +43,9 @@ async function updateCart(req, res) {
 // POST /api/cart/
 async function checkOut(req, res) {
   try {
-    const email = req.session.email;
+    const id = req.session._id;
     const isProcessing = Boolean(req.session.isProcessing);
-    if (!email) {
+    if (!id) {
       res.status(400).send('Please login to use this feature');
       return;
     }
@@ -53,8 +54,8 @@ async function checkOut(req, res) {
       return;
     }
     req.session.isProcessing = true;//lock checkout
-    console.log(email);
-    const receipt = await checkOutCart(email);
+    console.log(id);
+    const receipt = await checkOutCart(id);
     req.session.isProcessing = false;//unlock checkout
     return res.json({ ...receipt  });
   } catch (error) {

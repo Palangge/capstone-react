@@ -3,7 +3,7 @@ const products = require('../model/product');
 const { ObjectId } = require('mongodb');
 const fs = require('fs');
 const path = require('path');
-const multer = require("multer");
+//const multer = require("multer");
 const { v4: uuidv4 } = require('uuid');
 // Function to generate a unique filename
 const generateUniqueFilename = (originalFilename) => {

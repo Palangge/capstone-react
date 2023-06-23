@@ -1,11 +1,12 @@
 const { getDB } = require('../driver/mongodb');
 class User {
-  constructor(email, password, firstName, lastName, admin = false) {
+  constructor(email, password, firstName, lastName, admin = false, _id) {
     this.email = email;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.admin = Boolean(admin);
+    this._id = _id;
   }
 
   authenticate(password) {
@@ -25,8 +26,8 @@ async function getUserByEmail(email) {
   const collection = getUserCollection();
   const userDocument = await collection.findOne({ email });
   if (userDocument) {
-    const { email, password, firstName, lastName, admin } = userDocument;
-    return new User(email, password, firstName, lastName, admin);
+    const { email, password, firstName, lastName, admin, _id } = userDocument;
+    return new User(email, password, firstName, lastName, admin, _id);
   } else {
     return null;
   }
