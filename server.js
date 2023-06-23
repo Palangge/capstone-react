@@ -70,9 +70,9 @@ app.use('/api/contact', contactRoutes.contactRouter);//put api here to avoid col
 //Currently react app handles all routes that is not '/users' or '/api/products'
 //Error 404 is also handled by react app
 // Catch-all route to serve the React app
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+});*/
 
 
 // Error 404 - Page not found | this will probably not be reached but leave it here anyway
