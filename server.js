@@ -9,12 +9,12 @@ const cartRoutes = require('./server/routes/cart.js');
 const contactRoutes = require('./server/routes/contact.js');
 const path = require('path');
 //const { connectToMongoDB } = require('./server/driver/mongodb.js');
-const session = require('express-session');
+//const session = require('express-session');
 //all session variables are server side, no vulnerabilities there unless server is hacked
 //request.session.var is saved on the server side
 //client only have session_id
 //even if that is spoofed, their credentials will be invalid, they won't be able to use the session variables until they clear their browser data
-const { v4: uuidv4 } = require('uuid');
+//const { v4: uuidv4 } = require('uuid');
 const app = express();
 const port = process.env.PORT || 3000; // Replace with whatever port is free, or just keep this as is
 
@@ -29,7 +29,7 @@ app.use(cors({
   credentials: true // for cookies, yum
 }));
 */
-
+/*
 app.use(
   session({
     genid: () => uuidv4(),//unique id for session_id
@@ -42,7 +42,7 @@ app.use(
       expires: 600000 // 10 mins of inactivity.
     } 
   })
-);
+);*/
 
 // Middleware for parsing request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
