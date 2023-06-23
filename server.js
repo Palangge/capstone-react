@@ -49,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Serve the React build files
-app.use(express.static(path.join(__dirname, "build")));
+//app.use(express.static(path.join(__dirname, "build")));
 app.use(express.static("public"));
 
 // Route for index //not needed since react will handle all routes for browser user/client/customer/admin any frontend user
