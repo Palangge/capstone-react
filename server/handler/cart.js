@@ -44,6 +44,7 @@ async function updateCart(req, res) {
 async function checkOut(req, res) {
   try {
     const id = req.session._id;
+    const email = req.session.email;
     const isProcessing = Boolean(req.session.isProcessing);
     if (!id) {
       res.status(400).send('Please login to use this feature');
@@ -55,13 +56,13 @@ async function checkOut(req, res) {
     }
     req.session.isProcessing = true;//lock checkout
     console.log(id);
-    const receipt = await checkOutCart(id);
+    const receipt = await checkOutCart(id,email);
     req.session.isProcessing = false;//unlock checkout
     return res.json({ ...receipt  });
   } catch (error) {
     console.error(error);
     req.session.isProcessing = false;//unlock checkout
-    return res.status(500).send(error);
+    return res.status(500).send(error.name);
   }finally{
     req.session.isProcessing = false;//unlock checkout
   }

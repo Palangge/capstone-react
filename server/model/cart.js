@@ -48,7 +48,7 @@ async function dumpToCart(_id, cart) {
 }
 
 // Checkout for a specific user
-async function checkOutCart(user_id) {
+async function checkOutCart(user_id,email) {
   let cartItems;
   try {
     const collection = getCartCollection();
@@ -118,7 +118,7 @@ async function checkOutCart(user_id) {
       await editProduct(order._id, product);
     });
     
-    const receipt = new Receipt(_id, orderFinal, total);
+    const receipt = new Receipt(user_id,email, orderFinal, total);
     try {
       const checkoutCollection = getCheckoutCollection();
       const insertId = await checkoutCollection.insertOne(receipt);

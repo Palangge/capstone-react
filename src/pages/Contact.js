@@ -142,7 +142,7 @@ export const Contact = () => {
     return (
         <div class="alert alert-secondary alert-dismissible fade show" role="alert">
             {msg}
-            <button type="button" class="btn-close" onclick={setMsg('')} data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick={()=>setMsg('')} data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     );
   };
@@ -150,7 +150,7 @@ export const Contact = () => {
     return (
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {err}
-            <button type="button" class="btn-close" onclick={setErr('')} data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick={()=>setErr('')} data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     );
   };
@@ -220,8 +220,8 @@ export const Contact = () => {
                 </label>
                 <textarea class="form-control" id="message" rows="3"></textarea>
               </div>
-              {err && <ErrorModal />}
-              {msg && <MessageModal />}
+              {(err.length>0) ? <ErrorModal /> : ""}
+              {(msg.length>0) ? <MessageModal /> : ""}
               <button type="button" class="btn btn-primary" disabled={sState} onClick={sendMessage}>
                 Submit
               </button>

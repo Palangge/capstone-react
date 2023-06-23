@@ -65,7 +65,7 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
     return (
         <div class="alert alert-secondary alert-dismissible fade show" role="alert">
             {msg}
-            <button type="button" class="btn-close" onclick={setMsg('')} data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick={() => setMsg('')} data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     );
   };
@@ -74,7 +74,7 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
     return (
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {err}
-            <button type="button" class="btn-close" onclick={setErr('')} data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick={() => setErr('')} data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     );
   };
@@ -115,8 +115,10 @@ const ShoppingCart = ({ cartItems, addToCart, removeFromCart, refreshProductList
           </button>
         </div>
       )}
-      {msg.length>0 && <CheckOutMessage />}
-      {err.length>0 && <ErrorMessage />}
+      {msg}<br/>
+      {err}
+      {(msg.length>0) ? <CheckOutMessage /> : ""}
+      {(err.length>0) ? <ErrorMessage /> : ""}
     </div>
   );
 };
