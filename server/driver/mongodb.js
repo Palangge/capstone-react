@@ -22,8 +22,14 @@ async function connectToMongoDB() {
   }
 }
 
+async function getMongoDB() {
+    await client.connect();
+    db = client.db('shop');
+    return db;
+}
+
 function getDB() {
-  return db;
+  return getMongoDB();
 }
 module.exports = {
   connectToMongoDB,
