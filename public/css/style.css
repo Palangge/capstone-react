@@ -99,7 +99,7 @@ p{
     min-height: 400px;
     max-height: 400px;
     max-width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
 }
 .product-grid>.card>div>button {
